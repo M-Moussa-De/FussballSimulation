@@ -106,19 +106,27 @@
             {
                 case Spielposition.Sturm:
                 case Spielposition.Mittelfeld:
-                    this.tagesform -= this.tagesform * (4 / 100);
+                    this.tagesform -=  0.4;
                     break;
                 case Spielposition.Verteidigung:
                 case Spielposition.Tor:
-                    this.tagesform -= this.tagesform * (3 / 100);
+                    this.tagesform -=  0.3;
                     break;
+            }
+            if(this.tagesform <0)
+            {
+                this.tagesform = 0;
             }
         }
         public void MacheHalbzeitPause()
         {
-            if (this.tagesform * (25 / 100) <= 1)
+            if (this.tagesform + 0.25 <= 1)
             {
-                this.tagesform *= 25 / 100;
+                this.tagesform += 0.25;
+            }
+            else
+            {
+                this.tagesform = 1;
             }
         }
         public void Ruhetag()
