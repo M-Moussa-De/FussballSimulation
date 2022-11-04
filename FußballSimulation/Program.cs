@@ -1,4 +1,4 @@
-﻿using FußballSimulation;
+using FußballSimulation;
 
 
 // -----------------------------------------------------------------------------------------
@@ -67,4 +67,15 @@ bayern.HinzufügenSpieler(v);
 // -----------------------------------------------------------------------------------------
 
 Begegnung begegnung = new Begegnung(ahly, bayern);
+
+// Die Ergibnisse
+begegnung.SimuliereSpiel();
 Console.WriteLine(begegnung);
+
+// Über Manschaften
+//Console.WriteLine(ahly);
+//Console.WriteLine(bayern);
+
+// Über Spieler
+//Console.WriteLine(a);
+//Console.WriteLine(l);
