@@ -1,4 +1,4 @@
-﻿namespace FußballSimulation
+namespace FußballSimulation
 {
     public enum Spielposition
     {
@@ -33,12 +33,19 @@
             this.spielposition = spielposition;
 
         }
-        public string Name { get { return name; } set { name = value; } }
-        public string Geburtsdatum { get { return geburtsdatum; } set { geburtsdatum = value; } }
-        public int Offensivtechnik { get { return offensivtechnik; } set { offensivtechnik = value; } }
-        public int Defensivtechnik { get { return defensivtechnik; } set { defensivtechnik = value; } }
-        public double Tagesform { get { return tagesform; } set { tagesform = value; } }
-        public Spielposition Spielposition { get { return spielposition; } set { spielposition = value; } }
+        
+        public string GetName() {   return name; }
+        public void SetName(string name) { this.name = name;  }
+        public string GetGeburtsdatum() { return geburtsdatum; }
+        public void SetGeburtsdatum(string geburtsdatum) { this.geburtsdatum = geburtsdatum; }
+        public int GetOffensivtechnik() { return offensivtechnik; }
+        public void SetOffensivtechnik(int offensivtechnik) { this.offensivtechnik = offensivtechnik; }
+        public int GetDefensivtechnik() { return defensivtechnik; }
+        public void GetDefensivtechnik(int defensivtechnik) { this.defensivtechnik = defensivtechnik; }
+        public double Tagesform() { return tagesform; }
+        public void SetTagesform(double tagesform) { this.tagesform = tagesform; }
+        public Spielposition GetSpielposition() { return this.spielposition; }
+        public void SetSpielposition(Spielposition spielposition) { this.spielposition = spielposition; }
 
         public double GetOffensivstärke()
         {
@@ -81,7 +88,6 @@
 
             return defensivstärke;
         }
-
         public bool BekommtTorGelegenheit(double gegnerMannschaftDefensivstärke)
         {
             double chance = this.offensivtechnik / gegnerMannschaftDefensivstärke;
@@ -106,14 +112,15 @@
             {
                 case Spielposition.Sturm:
                 case Spielposition.Mittelfeld:
-                    this.tagesform -=  0.4;
+                    this.tagesform -= 0.04;
                     break;
                 case Spielposition.Verteidigung:
                 case Spielposition.Tor:
-                    this.tagesform -=  0.3;
+                    this.tagesform -= 0.03;
                     break;
             }
-            if(this.tagesform <0)
+
+            if(this.tagesform < 0)
             {
                 this.tagesform = 0;
             }
@@ -123,8 +130,7 @@
             if (this.tagesform + 0.25 <= 1)
             {
                 this.tagesform += 0.25;
-            }
-            else
+            } else
             {
                 this.tagesform = 1;
             }
@@ -143,7 +149,7 @@
         override
         public string ToString()
         {
-            return $"Spielername: {Name},\nSpieleralter: {CalcAlter()},\nSpielerstärke: {(GetOffensivstärke() + GetDefensivstärke())},\nSpielerposition: {Spielposition}\n";
+            return $"Spielername: {GetName()},\nSpieleralter: {CalcAlter()},\nSpielerstärke: {(GetOffensivstärke() + GetDefensivstärke())},\nSpielerposition: {GetSpielposition()}\n";
         }
     }
 
