@@ -1,4 +1,4 @@
-﻿namespace FußballSimulation
+namespace FußballSimulation
 {
     public class Mannschaft
     {
@@ -13,8 +13,8 @@
             this.aufstellung = new Spieler[11];
         }
 
-        public string Name() { return name; }
-        public string Land() { return land; }
+        public string GetName() { return this.name; }
+        public string GetLand() { return this.land; }
         public Spieler[] GetAufstellung() 
         {
             return this.aufstellung;
@@ -22,13 +22,13 @@
 
         public bool HinzufügenSpieler(Spieler spieler)
         {
-            if (HatAufstellungNochPlätze(aufstellung))
+            if (HatAufstellungNochPlätze(this.aufstellung))
             {
                 for (int i = 0; i < this.aufstellung.Length; i++)
                 {
-                    if (aufstellung[i] == null)
+                    if (this.aufstellung[i] == null)
                     {
-                        aufstellung[i] = spieler;
+                        this.aufstellung[i] = spieler;
                         break;
                     }
                 }
@@ -63,8 +63,9 @@
 
             for (int i = 0; i < aufstellung.Length; i++)
             {
-                if(aufstellung[i] != null) { 
-                    if (aufstellung[i].Name.ToLower() == name.ToLower())
+                if(aufstellung[i] != null)
+                { 
+                    if (aufstellung[i].GetName().ToLower() == name.ToLower())
                     {
                        spielerVorhanden = true;
                        spielerZumLöschen = aufstellung[i];
@@ -93,7 +94,7 @@
 
             foreach (Spieler sp in aufstellung)
             {
-                if (sp.Spielposition == Spielposition.Tor)
+                if (sp.GetSpielposition() == Spielposition.Tor)
                 {
                     torVorhanden = true;
                     break;
@@ -113,32 +114,32 @@
 
         public void MacheSpielrunde()
         {
-            foreach (Spieler spieler in aufstellung)
+            for (int i = 0; i < aufstellung.Length; i++)
             {
-                spieler.MacheSpielrunde();
+                aufstellung[i].MacheSpielrunde();
             }
         }
 
         public void MacheHalbzeitPause()
         {
-            foreach (Spieler spieler in aufstellung)
+            for (int i = 0; i < aufstellung.Length; i++)
             {
-                spieler.MacheHalbzeitPause();
+                aufstellung[i].MacheHalbzeitPause();
             }
         }
 
         public void Ruhetag()
         {
-            foreach (Spieler spieler in aufstellung)
+            for(int i =0; i < aufstellung.Length; i++)
             {
-                spieler.Ruhetag();
+                aufstellung[i].Ruhetag();
             }
         }
 
         override
         public string ToString()
         {
-            string output = $"---------------------------\nManschaftsname: {Name()},\nManschaftsland: {Land()},\n---------------------------\n\n";
+            string output = $"\nManschaftsname: {GetName()},\nManschaftsland: {GetLand()}\n\n";
 
             foreach (Spieler spieler in aufstellung)
             {
