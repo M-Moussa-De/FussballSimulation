@@ -1,90 +1,96 @@
-﻿namespace FußballSimulation
+namespace FußballSimulation
 {
     public class Begegnung
     {
         private Mannschaft mannschaft_1, mannschaft_2;
         private int mannschaft_1_tore, mannschaft_2_tore;
-        private readonly int spielrounde;
         
         public Begegnung(Mannschaft mannschaft_1, Mannschaft mannschaft_2)
         {
             this.mannschaft_1 = mannschaft_1;
             this.mannschaft_2 = mannschaft_2;
-            this.spielrounde = 18;
         }
       
         public void SimuliereSpiel()
         {
             for (int i = 0; i < 9; i++)
             {
-                SimuliereSpielrund();
+                this.SimuliereSpielrund();
             }
 
-            mannschaft_1.MacheHalbzeitPause();
-            mannschaft_2.MacheHalbzeitPause();
+            this.mannschaft_1.MacheHalbzeitPause();
+            this.mannschaft_2.MacheHalbzeitPause();
+
+            Console.WriteLine("================== Pause ==================");
 
             for (int i = 0; i < 9; i++)
             {
-                SimuliereSpielrund();
+                this.SimuliereSpielrund();
             }
         }
 
         private void SimuliereSpielrund()
         {
             // Manschaft 1
-            foreach (Spieler mannschaftOneSpieler in mannschaft_1.GetAufstellung())
+            for(int i = 0; i < this.mannschaft_1.GetAufstellung().Length; i++)
             {
-                if (mannschaftOneSpieler.BekommtTorGelegenheit(mannschaft_2.GetSpielstärke()))
+                if (this.mannschaft_1.GetAufstellung()[i].BekommtTorGelegenheit(this.mannschaft_2.GetSpielstärke()))
                 {
                     bool kannHalten = false;
-                    foreach (Spieler spieler2 in mannschaft_2.GetAufstellung())
+                    for (int j = 0; j < this.mannschaft_2.GetAufstellung().Length; j++)
                     {
-                        if (spieler2.KannBallHalten(mannschaft_2.GetSpielstärke()))
+                        if (this.mannschaft_2.GetAufstellung()[j].KannBallHalten(this.mannschaft_1.GetSpielstärke()))
                         {
                             kannHalten = true;
                         }
-                    }
 
-                    if (!kannHalten)
-                    {
-                        mannschaft_1_tore++;
-                        Console.WriteLine($"Manschaft {mannschaft_1} hat ein Tor geschossen. stunning!!") ;
+                        if (!kannHalten)
+                        {
+                            this.mannschaft_1_tore++;
+                            Console.WriteLine($"{this.GetManschaftOneName()} hat ein Tor geschossen. stunning!!");
+                        }
                     }
                 }
-
             }
 
             // Manschaft 2
-            foreach (Spieler mannschaftTwoSpieler in mannschaft_2.GetAufstellung())
+            for (int i = 0; i < this.mannschaft_2.GetAufstellung().Length; i++)
             {
-                if (mannschaftTwoSpieler.BekommtTorGelegenheit(mannschaft_1.GetSpielstärke()))
+                if (this.mannschaft_2.GetAufstellung()[i].BekommtTorGelegenheit(this.mannschaft_1.GetSpielstärke()))
                 {
                     bool kannHalten = false;
-                    foreach (Spieler spieler1 in mannschaft_1.GetAufstellung())
+                    for (int j = 0; j < this.mannschaft_1.GetAufstellung().Length; j++)
                     {
-                        if (spieler1.KannBallHalten(mannschaft_1.GetSpielstärke()))
+                        if (this.mannschaft_1.GetAufstellung()[j].KannBallHalten(this.mannschaft_2.GetSpielstärke()))
                         {
                             kannHalten = true;
+                        }
 
+                        if (!kannHalten)
+                        {
+                            this.mannschaft_2_tore++;
+                            Console.WriteLine($"{this.GetManschaftTwoName()} hat ein Tor geschossen. stunning!!");
                         }
                     }
 
-                    if (!kannHalten)
-                    {
-                        mannschaft_2_tore++;
-                        Console.WriteLine($"Manschaft {mannschaft_2} hat ein Tor geschossen. Spectacular!!");
-                    }
                 }
-
             }
+        }
 
+        public string GetManschaftOneName()
+        {
+            return this.mannschaft_1.GetName();
+        }
+
+        public string GetManschaftTwoName()
+        {
+            return this.mannschaft_2.GetName();
         }
 
         override
-        public string ToString()
+         public string ToString()
         {
-            return $"{mannschaft_1.Name()} {mannschaft_1_tore} VS {mannschaft_2_tore} {mannschaft_2.Name()}";
-
+            return $"=============== Final Ergebnis ===============\n {this.mannschaft_1.GetName()} {this.mannschaft_1_tore} VS {this.mannschaft_2_tore} {this.mannschaft_2.GetName()}";
         }
 
     }
